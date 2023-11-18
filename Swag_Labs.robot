@@ -1,6 +1,7 @@
 *** Settings ***
 Library    SeleniumLibrary
 Library    OperatingSystem
+Library    Screenshot
 Resource    Veriables.robot
 
 *** Variables ***
@@ -11,7 +12,7 @@ Login Swag Labs
     Open browser and Login Swag Labs page
     Logout from page
 
-User Login credential validation with all usernames
+User Login Logout credential validation with all usernames
     Open browser and Login Swag Labs page
     Logout from page
     login with Username locked
@@ -73,8 +74,10 @@ Add Items to Cart
     Click Button    ${Onesie}
     Click Button    ${Red_T_shirt}
     Sleep    3s
+    Page Should Contain    Remove
+    Page Should Contain    6
     Click Element    ${Cart}
-
+    All added Items validation in Your Cart
 Remove from Cart
     Click Button    ${Bag_pack_remove}
     Click Button    ${Bike_light_remove}
@@ -83,18 +86,22 @@ Remove from Cart
     Click Button    ${Onesie_remove}
     Click Button    ${Red_T_shirt_remove}
     Sleep    2s
+    All removed items validation in Your Cart
     Click Button    ${continue_shopping}
 
 Add signel item to cart
     Click Element    ${Select_item}
     Wait Until Element Is Visible    ${item_price}
     Click Button    ${Single_add_cart}
+    Page Should Contain    Remove
+    Page Should Contain    1
     Click Element    ${Cart}
     Wait Until Page Contains    Sauce Labs Backpack
     Sleep    2s
 
 Items checkout steps
     Click Button    ${Checkout}
+    Page Should Contain    Checkout: Your Information
     Input Text    ${first_N}    Rushikesh
     Input Text    ${Last_N}    Patil
     Input Text    ${Zip_code}    412115
@@ -102,6 +109,8 @@ Items checkout steps
     Page Should Contain    Payment Information
     Page Should Contain    Shipping Information
     Page Should Contain    Price Total
+    Page Should Contain    Item total: $
+    Page Should Contain    Tax: $
     Sleep    2s
     Click Button    ${Finish}
     Page Should Contain    Thank you for your order!
@@ -137,6 +146,7 @@ login with Username problem
     Input Text    ${Username}    ${Username3_text}
     Input Text    ${password}    ${password_text}
     Click Button    ${Login_button}
+    Take Screenshot
     Sleep    2s
 
 login with Username performance
@@ -156,3 +166,24 @@ login with Username visual
     Input Text    ${password}    ${password_text}
     Click Button    ${Login_button}
     Sleep    2s
+
+All added Items validation in Your Cart
+    Page Should Contain    QTY
+    Page Should Contain    Description
+    Page Should Contain    Your Cart
+    Page Should Contain    Sauce Labs Backpack
+    Page Should Contain    Sauce Labs Bolt T-Shirt
+    Page Should Contain    Sauce Labs Bike Light
+    Page Should Contain    Sauce Labs Fleece Jacket
+    Page Should Contain    Sauce Labs Onesie
+    Page Should Contain    Test.allTheThings() T-Shirt (Red)
+
+All removed items validation in Your Cart
+    Page Should Not Contain    Sauce Labs Backpack
+    Page Should Not Contain    Sauce Labs Bolt T-Shirt
+    Page Should Not Contain    Sauce Labs Bike Light
+    Page Should Not Contain    Sauce Labs Fleece Jacket
+    Page Should Not Contain    Sauce Labs Onesie
+    Page Should Not Contain    Test.allTheThings() T-Shirt (Red)
+    
+
