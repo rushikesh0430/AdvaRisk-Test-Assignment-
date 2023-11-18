@@ -11,7 +11,7 @@ Login Swag Labs
     Open browser and Login Swag Labs page
     Logout from page
 
-User Login credintial validation with all usernames
+User Login credential validation with all usernames
     Open browser and Login Swag Labs page
     Logout from page
     login with Username locked
